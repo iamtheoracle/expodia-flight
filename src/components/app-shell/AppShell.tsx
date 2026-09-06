@@ -25,7 +25,7 @@ export function AppShell({ children, currentPath }: { children: React.ReactNode;
       <main className="main">
         <header className="header">
           <div className="headerTitle">Agent workspace</div>
-          <div className="status"><span className="statusDot" aria-hidden="true" /> Provider-backed mode</div>
+          <div className="status"><span className="statusDot" aria-hidden="true" /> Provider connection required</div>
         </header>
         {children}
       </main>
