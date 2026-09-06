@@ -20,7 +20,7 @@ export default function NewBookingPage() {
       </div>
 
       <form className="card" onSubmit={handleSubmit}>
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
+        <div className="formGrid">
           <label>From<input name="origin" required placeholder="Airport or IATA" /></label>
           <label>To<input name="destination" required placeholder="Airport or IATA" /></label>
           <label>Departure<input name="departure" required type="date" /></label>
