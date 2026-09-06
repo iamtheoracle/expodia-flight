@@ -1,15 +1,9 @@
-import type { DocumentArtifact, TicketDocumentSnapshot } from './contracts';
+import type { TicketDocumentSnapshot } from './contracts';
+import { renderTicketDocument } from './render-ticket';
 
-export function createTicketDocumentArtifact(snapshot: TicketDocumentSnapshot): DocumentArtifact {
-  if (!snapshot.ticketId || !snapshot.bookingId || !snapshot.passengerId || !snapshot.providerTicketId) {
-    throw new Error('A ticket document requires authoritative ticket, booking, passenger, and provider ticket identities');
+export async function generateTicketDocument(snapshot: TicketDocumentSnapshot) {
+  if (snapshot.documentVersion < 1) {
+    throw new Error('Ticket document version must be positive');
   }
-
-  return {
-    documentId: `doc_${snapshot.ticketId}_v${snapshot.documentVersion}`,
-    filename: `${snapshot.passengerId}_${snapshot.ticketId}_v${snapshot.documentVersion}.pdf`,
-    mimeType: 'application/pdf',
-    version: snapshot.documentVersion,
-    snapshot,
-  };
+  return renderTicketDocument(snapshot);
 }
