@@ -86,10 +86,11 @@ create table public.tickets (
   e_ticket_number text,
   verification_reference text not null unique,
   status public.ticket_status not null default 'PENDING',
-  document_version integer not null default 1,
+  document_version integer not null default 1 check (document_version > 0),
   issued_at timestamptz,
   created_at timestamptz not null default now(),
-  unique (provider_name, provider_ticket_id)
+  unique (provider_name, provider_ticket_id),
+  foreign key (booking_id, passenger_id) references public.booking_passengers(booking_id, passenger_id)
 );
 
 create table public.verification_records (
