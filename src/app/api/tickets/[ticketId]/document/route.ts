@@ -52,7 +52,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ tic
       documentVersion: ticket.document_version,
     });
 
-    return new Response(artifact.bytes as BodyInit, {
+    return new Response(Buffer.from(artifact.bytes), {
       status: 200,
       headers: {
         'content-type': artifact.mimeType,
