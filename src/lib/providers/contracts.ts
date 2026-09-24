@@ -98,6 +98,9 @@ export interface FlightStatusProvider {
   }): Promise<ProviderFlightStatus>;
 }
 
+import type { ProviderCapabilitySet } from '@/lib/flights/capabilities';
+
 export interface FlightProvider extends FlightSearchProvider, AvailabilityProvider, BookingProvider, TicketingProvider, FlightStatusProvider {
   readonly name: string;
+  readonly capabilities: ProviderCapabilitySet;
 }
