@@ -32,6 +32,7 @@ describe('Expodia domain integrity', () => {
       assertBookingTransition('AWAITING_CONFIRMATION', 'CONFIRMED', {
         confirmed: true,
         providerBookingId: 'provider-booking-1',
+        status: 'CONFIRMED',
         confirmedAt: '2026-09-06T12:00:00Z',
       }),
     ).not.toThrow();

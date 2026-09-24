@@ -1,7 +1,10 @@
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 type VerificationState =
-  | { kind: 'invalid' | 'not-found' | 'not-valid' | 'unavailable' }
+  | { kind: 'invalid' }
+  | { kind: 'not-found' }
+  | { kind: 'not-valid' }
+  | { kind: 'unavailable' }
   | {
       kind: 'verified';
       verificationReference: string;
