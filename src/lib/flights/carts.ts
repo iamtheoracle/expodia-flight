@@ -13,8 +13,30 @@ export async function createCartForAgent(agentId: string, currency = 'USD') {
   return data;
 }
 
-export async function addOfferToCart(agentId: string, offer: NormalizedFlightOffer) {
+export async function addOfferToCart(agentId: string, offerId: string) {
   const supabase = await createSupabaseServerClient();
+
+  const { data: storedOffer, error: offerLookupError } = await supabase
+    .from('flight_offers')
+    .select('id, provider_name, provider_offer_id, source, currency, total_amount, expires_at, raw_offer')
+    .eq('id', offerId)
+    .single();
+
+  if (offerLookupError || !storedOffer) {
+    throw new Error('The selected flight offer is not available to this agent.');
+  }
+
+  const rawOffer = storedOffer.raw_offer as unknown as NormalizedFlightOffer;
+  const offer: NormalizedFlightOffer = {
+    ...rawOffer,
+    id: storedOffer.id,
+    provider: storedOffer.provider_name,
+    providerOfferId: storedOffer.provider_offer_id,
+    source: storedOffer.source,
+    currency: storedOffer.currency,
+    totalAmount: Number(storedOffer.total_amount),
+    expiresAt: storedOffer.expires_at ?? undefined,
+  };
 
   const { data: existingCart, error: cartError } = await supabase
     .from('carts')
@@ -32,20 +54,6 @@ export async function addOfferToCart(agentId: string, offer: NormalizedFlightOff
   if (cart.currency !== offer.currency) {
     throw new Error('A cart cannot contain offers in multiple currencies.');
   }
-
-  const { error: offerError } = await supabase.from('flight_offers').upsert({
-    id: offer.id,
-    search_id: offer.searchId ?? null,
-    provider_name: offer.provider,
-    provider_offer_id: offer.providerOfferId,
-    source: offer.source,
-    currency: offer.currency,
-    total_amount: offer.totalAmount,
-    expires_at: offer.expiresAt ?? null,
-    raw_offer: offer,
-  });
-
-  if (offerError) throw new Error(offerError.message);
 
   const { data: item, error: itemError } = await supabase
     .from('cart_items')
