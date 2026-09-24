@@ -35,6 +35,7 @@ export async function addOfferToCart(agentId: string, offer: NormalizedFlightOff
 
   const { error: offerError } = await supabase.from('flight_offers').upsert({
     id: offer.id,
+    search_id: offer.searchId ?? null,
     provider_name: offer.provider,
     provider_offer_id: offer.providerOfferId,
     source: offer.source,
