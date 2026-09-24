@@ -67,7 +67,7 @@ export default function NewBookingPage() {
       const response = await fetch('/api/cart', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ offer }),
+        body: JSON.stringify({ offerId: offer.id }),
       });
       const body = await response.json();
       if (!response.ok) {
