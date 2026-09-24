@@ -38,7 +38,7 @@ export default async function CartPage() {
                 <article className="card cartItem" key={item.id}>
                   <div className="cartItemHeader">
                     <div>
-                      <div className="eyebrow">{offer?.provider} · {offer?.source}</div>
+                      <div className="eyebrow">{offer?.provider_name} · {offer?.source}</div>
                       <h2>{segments.map((segment) => `${segment.originIata} → ${segment.destinationIata}`).join(' · ')}</h2>
                     </div>
                     <strong>{offer?.currency} {Number(offer?.total_amount ?? 0).toLocaleString()}</strong>
