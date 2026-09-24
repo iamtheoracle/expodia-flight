@@ -2,7 +2,8 @@ import Link from 'next/link';
 
 const navigation = [
   ['Dashboard', '/'],
-  ['New booking', '/bookings/new'],
+  ['Find flights', '/bookings/new'],
+  ['Cart', '/cart'],
   ['Bookings', '/bookings'],
   ['Passengers', '/passengers'],
   ['Tickets', '/tickets'],
