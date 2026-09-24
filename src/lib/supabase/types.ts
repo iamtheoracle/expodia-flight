@@ -406,36 +406,152 @@ export type Database = {
           },
         ]
       }
+      document_templates: {
+        Row: {
+          country_code: string | null
+          created_at: string
+          document_type: string
+          id: string
+          issuer_name: string | null
+          issuer_type: string
+          language_code: string
+          required_fields: Json
+          source_reference: string | null
+          status: string
+          version: string
+        }
+        Insert: {
+          country_code?: string | null
+          created_at?: string
+          document_type: string
+          id: string
+          issuer_name?: string | null
+          issuer_type: string
+          language_code?: string
+          required_fields?: Json
+          source_reference?: string | null
+          status?: string
+          version: string
+        }
+        Update: {
+          country_code?: string | null
+          created_at?: string
+          document_type?: string
+          id?: string
+          issuer_name?: string | null
+          issuer_type?: string
+          language_code?: string
+          required_fields?: Json
+          source_reference?: string | null
+          status?: string
+          version?: string
+        }
+        Relationships: []
+      }
+      document_versions: {
+        Row: {
+          content_hash: string | null
+          created_at: string
+          document_id: string
+          id: string
+          status: string
+          storage_path: string | null
+          version: number
+        }
+        Insert: {
+          content_hash?: string | null
+          created_at?: string
+          document_id: string
+          id?: string
+          status: string
+          storage_path?: string | null
+          version: number
+        }
+        Update: {
+          content_hash?: string | null
+          created_at?: string
+          document_id?: string
+          id?: string
+          status?: string
+          storage_path?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_versions_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       documents: {
         Row: {
           agent_id: string
           booking_id: string | null
+          content_hash: string | null
+          country_code: string | null
           created_at: string
           document_number: string
           document_type: string
+          document_version: number
           id: string
+          issued_at: string | null
+          issuer_name: string | null
+          issuer_type: string
+          language_code: string
+          metadata: Json
+          mime_type: string
           status: string
           storage_path: string | null
+          supersedes_document_id: string | null
+          template_id: string | null
+          template_version: string | null
         }
         Insert: {
           agent_id: string
           booking_id?: string | null
+          content_hash?: string | null
+          country_code?: string | null
           created_at?: string
           document_number: string
           document_type: string
+          document_version?: number
           id?: string
+          issued_at?: string | null
+          issuer_name?: string | null
+          issuer_type?: string
+          language_code?: string
+          metadata?: Json
+          mime_type?: string
           status?: string
           storage_path?: string | null
+          supersedes_document_id?: string | null
+          template_id?: string | null
+          template_version?: string | null
         }
         Update: {
           agent_id?: string
           booking_id?: string | null
+          content_hash?: string | null
+          country_code?: string | null
           created_at?: string
           document_number?: string
           document_type?: string
+          document_version?: number
           id?: string
+          issued_at?: string | null
+          issuer_name?: string | null
+          issuer_type?: string
+          language_code?: string
+          metadata?: Json
+          mime_type?: string
           status?: string
           storage_path?: string | null
+          supersedes_document_id?: string | null
+          template_id?: string | null
+          template_version?: string | null
         }
         Relationships: [
           {
@@ -450,6 +566,13 @@ export type Database = {
             columns: ["booking_id"]
             isOneToOne: false
             referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_supersedes_document_id_fkey"
+            columns: ["supersedes_document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
             referencedColumns: ["id"]
           },
         ]
