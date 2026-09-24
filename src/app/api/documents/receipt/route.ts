@@ -5,7 +5,7 @@ import { EXPODIA_RECEIPT_TEMPLATE, validateDocumentFields } from '@/lib/document
 import { renderExpodiaReceiptPdf } from '@/lib/documents/pdf';
 import { sha256Hex } from '@/lib/documents/hash';
 
-const PAYMENT_READY = new Set(['SUCCEEDED', 'AUTHORIZED']);
+const PAYMENT_READY = new Set(['SUCCEEDED']);
 const BOOKING_READY = new Set([
   'PAYMENT_CONFIRMED',
   'BOOKING_PENDING',
