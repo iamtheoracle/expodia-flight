@@ -7,6 +7,7 @@ const navigation = [
   ['Bookings', '/bookings'],
   ['Passengers', '/passengers'],
   ['Tickets', '/tickets'],
+  ['Documents', '/documents'],
   ['Flight tracking', '/tracking'],
   ['Notifications', '/notifications'],
   ['Audit', '/audit'],
