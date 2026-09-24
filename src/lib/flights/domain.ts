@@ -10,6 +10,7 @@ export type NormalizedFlightSegment = ProviderSegment & {
 
 export type NormalizedFlightOffer = {
   id: string;
+  searchId?: string;
   provider: string;
   providerOfferId: string;
   currency: string;
@@ -45,6 +46,7 @@ export function normalizeProviderOffer(offer: ProviderFlightOffer, searchId: str
   const stableId = `offer_${searchId}_${offer.provider}_${offer.providerOfferId}`.replace(/[^a-zA-Z0-9_-]/g, '_');
   return {
     id: stableId,
+    searchId,
     provider: offer.provider,
     providerOfferId: offer.providerOfferId,
     currency: offer.currency.toUpperCase(),
