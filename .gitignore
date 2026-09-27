@@ -7,3 +7,6 @@ coverage/
 .env.*.local
 .DS_Store
 *.log
+/dist/
+.vinext/
+.wrangler/

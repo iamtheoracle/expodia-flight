@@ -1,0 +1,32 @@
+name: Cloudflare Compatibility
+
+on:
+  push:
+    branches:
+      - cloudflare/prepare
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  cloudflare-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Prepare vinext Cloudflare configuration
+        run: npx vinext init --skip-check --platform=cloudflare
+      - name: Cloudflare production build
+        run: npm run build:vinext
+      - name: Commit generated Cloudflare preparation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json vite.config.ts wrangler.jsonc .gitignore
+          git diff --cached --quiet || git commit -m "Prepare Cloudflare Workers deployment [skip ci]"
+          git push origin HEAD:cloudflare/prepare
