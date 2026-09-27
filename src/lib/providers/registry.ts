@@ -1,5 +1,6 @@
 import { ProviderNotConfiguredError } from './errors';
 import type { FlightProvider } from './contracts';
+import { DuffelFlightProvider } from './duffel';
 
 export class ProviderRegistry {
   constructor(private readonly providers: FlightProvider[]) {}
@@ -24,6 +25,11 @@ export class ProviderRegistry {
 }
 
 export function createProductionProviderRegistry(): ProviderRegistry {
-  // A provider adapter is deliberately not constructed here until the provider company/API is supplied.
+  const providerName = (process.env.FLIGHT_PROVIDER_NAME ?? '').trim().toLowerCase();
+
+  if (providerName === 'duffel' || process.env.DUFFEL_API_KEY) {
+    return new ProviderRegistry([new DuffelFlightProvider()]);
+  }
+
   return new ProviderRegistry([]);
 }

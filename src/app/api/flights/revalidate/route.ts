@@ -31,7 +31,7 @@ export async function POST(request: Request) {
 
   try {
     const provider = createProductionProviderRegistry().getProductionProvider();
-    const result = await provider.revalidate(offer.provider_offer_id);
+    const result = await provider.revalidate(offer.provider_offer_id, Number(offer.total_amount));
 
     return NextResponse.json({
       offerId: offer.id,

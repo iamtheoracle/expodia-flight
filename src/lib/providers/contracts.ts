@@ -76,7 +76,7 @@ export interface FlightSearchProvider {
 }
 
 export interface AvailabilityProvider {
-  revalidate(providerOfferId: string): Promise<AvailabilityRevalidation>;
+  revalidate(providerOfferId: string, expectedTotalAmount?: number): Promise<AvailabilityRevalidation>;
 }
 
 export interface BookingProvider {
