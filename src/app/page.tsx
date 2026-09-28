@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import AppleAirportMap from '@/components/AppleAirportMap';
+import ExpodiaMap from '@/components/ExpodiaMap';
 
 const discoveries=[
   {label:'Aviation intelligence',text:'Follow airline, airport, aircraft and route developments.',href:'/aviation-public'},
@@ -23,7 +23,7 @@ export default function HomePage(){
         <p>Discover what you need, arrange it with Expodia or trusted partners, and keep the journey in one place. You can explore without signing up.</p>
         <div className="heroActions"><Link className="publicPrimary" href="/traveler">Start planning</Link><Link className="publicSecondary" href="/track">Track a flight</Link></div>
       </div>
-      <AppleAirportMap className="heroMap" height={430}/>
+      <ExpodiaMap className="heroMap" height={430}/>
     </section>
     <section className="publicSection">
       <div className="sectionHeading"><div><div className="publicEyebrow">ONE PLACE</div><h2>Research the trip before you decide how to book it.</h2></div><Link href="/traveler">Open My Plan →</Link></div>
