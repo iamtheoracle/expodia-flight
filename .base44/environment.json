@@ -1,0 +1,11 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    { "name": "SUPABASE_SERVICE_ROLE_KEY", "description": "Supabase project → Settings → API → service_role key. Server-only; needed for admin/agent server actions.", "requiredAtBoot": false },
+    { "name": "OPENAI_API_KEY", "description": "OpenAI API key (platform.openai.com/api-keys) for the traveler assistant chat.", "requiredAtBoot": false },
+    { "name": "NEXT_PUBLIC_SUPABASE_URL", "description": "Optional override of the Supabase project URL (defaults to the project hardcoded in src/lib/supabase/config.ts).", "requiredAtBoot": false },
+    { "name": "NEXT_PUBLIC_SUPABASE_ANON_KEY", "description": "Optional override of the Supabase publishable/anon key (a default is hardcoded).", "requiredAtBoot": false }
+  ]
+}
