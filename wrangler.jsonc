@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "expodia-flight",
-  "main": ".open-next/worker.js",
+  "main": "./cloudflare-worker.ts",
   "compatibility_date": "2026-09-27",
   "compatibility_flags": [
     "nodejs_compat",
@@ -21,6 +21,9 @@
       "service": "expodia-agents"
     }
   ],
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
   "observability": {
     "enabled": true
   }

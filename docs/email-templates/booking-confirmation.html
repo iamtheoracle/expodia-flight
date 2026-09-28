@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>{{subject}}</title></head>
+<body style="margin:0;background:#fff;color:#111;font-family:Arial,Helvetica,sans-serif">
+<div style="max-width:680px;margin:0 auto;padding:24px 16px">
+<header style="padding:18px 0;border-bottom:1px solid #111"><div style="font-size:22px;font-weight:700;letter-spacing:-.03em">EXPODIA FLIGHTS</div></header>
+<main style="padding:28px 0">
+<div style="font-size:12px;font-weight:700;letter-spacing:.05em">CONFIRMATION</div>
+<h1 style="font-size:28px;line-height:1.15;margin:8px 0 12px">Your flight is booked.</h1>
+<p style="font-size:14px;line-height:1.55;margin:0 0 22px">Thank you for booking with Expodia Flights. Your booking information is shown below.</p>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border-top:1px solid #111;border-bottom:1px solid #111">
+<tr><td style="padding:10px 0;font-size:12px">Itinerary #</td><td align="right" style="padding:10px 0;font-weight:700">{{confirmation}}</td></tr>
+<tr><td style="padding:10px 0;font-size:12px">Booking status</td><td align="right" style="padding:10px 0">{{bookingStatus}}</td></tr>
+<tr><td style="padding:10px 0;font-size:12px">Ticketing status</td><td align="right" style="padding:10px 0">{{ticketingStatus}}</td></tr>
+</table>
+<h2 style="font-size:18px;margin:28px 0 10px">Traveler details</h2>{{travelerDetails}}
+<h2 style="font-size:18px;margin:28px 0 10px">Flight details</h2>{{flightDetails}}
+<h2 style="font-size:18px;margin:28px 0 10px">Price summary</h2>{{priceSummary}}
+<p style="margin:28px 0"><a href="{{actionUrl}}" style="color:#111;font-weight:700">View your itinerary</a></p>
+<p style="font-size:11px;line-height:1.5;border-top:1px solid #bbb;padding-top:16px;margin-top:28px">This email is issued by Expodia Flights for the travel record shown above. Airline and supplier-issued documents retain the identity of their actual issuer.</p>
+</main>
+<footer style="padding:16px 0;border-top:1px solid #111;font-size:11px">Expodia Flights · {{customerEmail}}</footer>
+</div>
+</body>
+</html>

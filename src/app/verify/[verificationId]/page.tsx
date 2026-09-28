@@ -14,6 +14,8 @@ type VerificationState =
       status: string;
       providerName: string | null;
       pnr: string | null;
+      providerDestination: { url: string; action: string; source: string | null; verifiedAt: string | null } | null;
+      providerManageDestination: { url: string; action: string; source: string | null; verifiedAt: string | null } | null;
       itinerary: Array<{
         airline: string;
         flightNumber: string;
@@ -47,6 +49,10 @@ export default async function VerificationPage({ params }: { params: Promise<{ v
           <div><dt>E-ticket number</dt><dd>{state.eTicketNumber ?? 'Not supplied by provider'}</dd></div>
           <div><dt>Status</dt><dd>{state.status}</dd></div>
         </dl>
+        <div className="verificationActions">
+          {state.providerDestination && <a className="verificationProviderLink" href={state.providerDestination.url} target="_blank" rel="noreferrer">More information with provider ↗</a>}
+          {state.providerManageDestination && <a className="verificationProviderLink secondary" href={state.providerManageDestination.url} target="_blank" rel="noreferrer">Manage booking with provider ↗</a>}
+        </div>
         <section>
           <h2>Journey</h2>
           {state.itinerary.length === 0 ? (
@@ -101,6 +107,8 @@ async function loadVerificationState(verificationId: string): Promise<Verificati
       status: body.status,
       providerName: body.booking?.providerName ?? null,
       pnr: body.booking?.pnr ?? null,
+      providerDestination: body.booking?.providerDestination ?? null,
+      providerManageDestination: body.booking?.providerManageDestination ?? null,
       itinerary: (body.itinerary ?? []).map((segment: { airline: string; flightNumber: string; origin: string; destination: string; departure: string; arrival: string }) => ({
         airline: segment.airline,
         flightNumber: segment.flightNumber,

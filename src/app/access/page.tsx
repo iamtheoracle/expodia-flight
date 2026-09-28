@@ -103,7 +103,7 @@ export default function AccessPage() {
       setLoading(false);
       return;
     }
-    router.replace('/');
+    router.replace('/agent');
   }
 
   async function verifyAgentPin(event: FormEvent<HTMLFormElement>) {
@@ -124,7 +124,7 @@ export default function AccessPage() {
       setLoading(false);
       return;
     }
-    router.replace('/');
+    router.replace('/agent');
   }
 
   async function signUp(event: FormEvent<HTMLFormElement>) {
@@ -259,7 +259,7 @@ export default function AccessPage() {
       return;
     }
 
-    router.replace('/');
+    router.replace('/agent');
   }
 
   return (

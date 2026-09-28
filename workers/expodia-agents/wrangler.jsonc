@@ -35,5 +35,16 @@
   "observability": {
     "enabled": true
   },
-  "workers_dev": false
+  "workers_dev": false,
+  "services": [
+    {
+      "binding": "EXPODIA_PLATFORM",
+      "service": "expodia-flight"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "* * * * *"
+    ]
+  }
 }

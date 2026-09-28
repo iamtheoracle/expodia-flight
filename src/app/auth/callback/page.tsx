@@ -46,7 +46,6 @@ export default function AuthCallbackPage() {
             return;
           }
         }
-      }
 
       if (active) router.replace(next);
     }

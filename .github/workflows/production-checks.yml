@@ -18,3 +18,19 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npx opennextjs-cloudflare build
+
+  agents:
+    name: Validate Cloudflare agent worker
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: workers/expodia-agents
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: workers/expodia-agents/package.json
+      - run: npm install
+      - run: npm run typecheck

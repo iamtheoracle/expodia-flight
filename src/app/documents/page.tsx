@@ -14,6 +14,16 @@ export default async function DocumentsPage() {
         .order('created_at', { ascending: false })
     : { data: [] };
 
+  const bookingIds = (documents ?? []).map((document) => document.booking_id);
+  const { data: history } = user && bookingIds.length
+    ? await supabase
+        .from('document_events')
+        .select('id, document_id, booking_id, event_type, actor_type, created_at')
+        .in('booking_id', bookingIds)
+        .order('created_at', { ascending: false })
+        .limit(100)
+    : { data: [] };
+
   return (
     <AppShell currentPath="/documents">
       <section className="content">
@@ -50,6 +60,23 @@ export default async function DocumentsPage() {
             ))}
           </div>
         )}
+
+        <section className="card" style={{ marginTop: 24 }}>
+          <div className="eyebrow">DOCUMENT HISTORY</div>
+          <h2>Workflow history</h2>
+          {!history?.length ? (
+            <p className="subtitle">No document lifecycle events have been recorded yet.</p>
+          ) : (
+            <div className="cartList">
+              {history.map((event) => (
+                <div className="cartItem" key={event.id}>
+                  <div className="cartItemHeader"><strong>{event.event_type.replaceAll('_', ' ')}</strong><span>{event.actor_type}</span></div>
+                  <div className="cartFooter"><span>Document {event.document_id}</span><span>{new Date(event.created_at).toLocaleString()}</span></div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </section>
     </AppShell>
   );

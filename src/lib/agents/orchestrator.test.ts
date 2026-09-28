@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { routeFlightRequest, routePostBookingWork, routeTicketedTravel } from './orchestrator';
+import { routeContinuousDiscoveryWork, routeFlightRequest, routePostBookingWork, routeTicketedTravel } from './orchestrator';
 
 describe('Expodia agent orchestration', () => {
   it('distributes pre-booking work across specialist workers', () => {
@@ -19,6 +19,16 @@ describe('Expodia agent orchestration', () => {
     expect(jobs.map((job) => job.worker)).toContain('ticketing_worker');
     expect(jobs.map((job) => job.worker)).toContain('document_worker');
     expect(jobs.map((job) => job.worker)).toContain('integrity_worker');
+  });
+
+  it('routes continuous discovery to dedicated internal workers', () => {
+    expect(routeContinuousDiscoveryWork().map((job) => job.worker)).toEqual([
+      'flight_discovery',
+      'airport_discovery',
+      'travel_discovery',
+      'travel_news',
+      'technical_update_discovery',
+    ]);
   });
 
   it('routes ticketed travel into operations, check-in and wallet workers', () => {
