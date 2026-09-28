@@ -84,11 +84,17 @@ export default function TravelerSecurityGate({ children }: { children: React.Rea
       }
     }, 1000);
     const onStorage = () => setLockMinutes(readLockMinutes());
+    const onManualLock = () => {
+      localStorage.setItem('expodia_app_locked', '1');
+      setMode('unlock');
+    };
     window.addEventListener('storage', onStorage);
+    window.addEventListener('expodia:lock', onManualLock);
     return () => {
       events.forEach(event => window.removeEventListener(event, activity));
       window.clearInterval(timer);
       window.removeEventListener('storage', onStorage);
+      window.removeEventListener('expodia:lock', onManualLock);
     };
   }, [bypass, mode, ready]);
 
