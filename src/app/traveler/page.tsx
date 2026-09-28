@@ -28,7 +28,7 @@ export default function TravelerPlanningPage(){
   const [tab,setTab]=useState<Tab>('home'); const [drawer,setDrawer]=useState(false);
   const [pin,setPin]=useState(''); const [pinConfirm,setPinConfirm]=useState(''); const [pinMode,setPinMode]=useState<'setup'|'unlock'|null>(null); const [notice,setNotice]=useState(''); const [researchQuery,setResearchQuery]=useState(''); const [researchAnswer,setResearchAnswer]=useState(''); const [researchSources,setResearchSources]=useState<string[]>([]); const [researchLoading,setResearchLoading]=useState(false);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect\n  useEffect(()=>{if(typeof window!=='undefined'&&new URLSearchParams(window.location.search).get('view')==='groups')setTab('groups');},[]);
+  useEffect(() => {\n    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('view') === 'groups') {\n      setTab('groups');\n    }\n  }, []);
 
   useEffect(()=>{
     if(typeof window==='undefined')return;
