@@ -1,42 +1,27 @@
 import Link from 'next/link';
 
 const navigation = [
-  ['Dashboard', '/'],
-  ['Find flights', '/bookings/new'],
-  ['Cart', '/cart'],
-  ['Bookings', '/bookings'],
-  ['Passengers', '/passengers'],
-  ['Tickets', '/tickets'],
-  ['Documents', '/documents'],
-  ['Flight tracking', '/tracking'],
-  ['Aviation intelligence', '/aviation'],
-  ['Industry leadership', 'https://www.expediagroup.com/en-us/about-us/leadership'],
-  ['Notifications', '/notifications'],
-  ['Audit', '/audit'],
+  ['Dashboard', '/agent'], ['Find flights', '/bookings/new'], ['Cart', '/cart'],
+  ['Bookings', '/bookings'], ['Passengers', '/passengers'], ['Tickets', '/tickets'],
+  ['Documents', '/documents'], ['Flight tracking', '/tracking'], ['Aviation intelligence', '/aviation'],
+  ['Notifications', '/notifications'], ['Audit', '/audit'],
 ] as const;
 
 export function AppShell({ children, currentPath }: { children: React.ReactNode; currentPath: string }) {
   return (
     <div className="shell">
-      <aside className="sidebar" aria-label="Primary navigation">
-        <div className="brand">Expodia Flights</div>
+      <aside className="sidebar" aria-label="Agent navigation">
+        <div className="brand">Expodia Agent</div>
         <nav className="nav">
           {navigation.map(([label, href]) => (
-            <Link
-              key={href}
-              href={href}
-              aria-current={currentPath === href ? 'page' : undefined}
-              {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            >
-              {label}
-            </Link>
+            <Link key={href} href={href} aria-current={currentPath === href ? 'page' : undefined}>{label}</Link>
           ))}
         </nav>
       </aside>
       <main className="main">
         <header className="header">
-          <div className="headerTitle">Agent workspace</div>
-          <div className="status"><span className="statusDot" aria-hidden="true" /> Provider connection required</div>
+          <div className="headerTitle">Agent operations</div>
+          <div className="status"><span className="statusDot" aria-hidden="true" /> Booking workspace</div>
         </header>
         {children}
       </main>

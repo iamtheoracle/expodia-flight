@@ -1,0 +1,29 @@
+# Expodia Flights — Phase 0 Baseline
+
+## Repository State
+- Branch: milestones/expodia-platform-foundation
+- Base: main (36770bc)
+- Changes: Dashboard separation, authorization foundation, deployment reconciliation
+
+## Reported Changes (from git compare)
+1. Removed open-next.config.ts (OpenNext/Cloudflare config)
+2. Updated package.json: eslint 10.11.0 → 9.39.5, typescript 7.0.2 → 6.0.3
+3. Removed CI step for opennextjs-cloudflare build
+4. Added route-access.ts with explicit role/path mapping
+5. Added AdminShell component
+6. Added /agent/page.tsx dashboard
+7. Wrapped /admin/page.tsx in AdminShell
+8. Added milestone planning/design docs
+
+## Baseline Action Items
+1. Verify current branch builds/passes tests
+2. Run: npm install, lint, typecheck, test, build
+3. Identify any blockers preventing phase progression
+4. Document baseline metrics
+
+## Expected State After Phase 0
+- Clean build: ✓ or detailed error report
+- TypeScript: ✓ or detailed error report
+- Lint: ✓ or detailed error report
+- Tests: ✓ or detailed error report
+- No deployment to production (development only)
