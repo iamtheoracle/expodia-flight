@@ -55,6 +55,7 @@ export default function TravelerProfilePage() {
 
   async function lockApp() {
     localStorage.setItem('expodia_app_locked', '1');
+    window.dispatchEvent(new Event('expodia:lock'));
     router.replace('/traveler');
   }
 
