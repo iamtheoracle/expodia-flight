@@ -17,6 +17,7 @@ export default function TravelerProfilePage() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [lockMinutes, setLockMinutes] = useState(15);
 
   useEffect(() => {
     let mounted = true;
@@ -26,6 +27,8 @@ export default function TravelerProfilePage() {
       if (mounted) {
         setProfile(row ?? null);
         setEmail(data.user.email ?? '');
+        const stored = Number(localStorage.getItem('expodia_lock_minutes') || 15);
+        setLockMinutes([5,10,15,30,60].includes(stored) ? stored : 15);
       }
     });
     return () => { mounted = false; };
@@ -40,6 +43,14 @@ export default function TravelerProfilePage() {
     if (rpcError || data !== true) setError('The PIN could not be saved. Please try again.');
     else { setMessage('Your personal Expodia PIN is active.'); setPin(''); setConfirmPin(''); }
     setSaving(false);
+  }
+
+  function saveLockDuration(value: number) {
+    if (![5,10,15,30,60].includes(value)) return;
+    localStorage.setItem('expodia_lock_minutes', String(value));
+    setLockMinutes(value);
+    window.dispatchEvent(new Event('expodia:lock-settings'));
+    setMessage('Automatic app lock is set to ' + value + ' minutes of inactivity.');
   }
 
   async function lockApp() {
@@ -61,9 +72,8 @@ export default function TravelerProfilePage() {
     <main className="travelerApp">
       <header className="travelerAppHeader">
         <Link href="/traveler" className="travelerAppBrand">Expodia</Link>
-        <nav className="travelerAppNav" aria-label="Traveler navigation">
-          <Link href="/traveler">Home</Link><Link href="/traveler?tab=groups">Groups</Link><Link href="/traveler/inbox">Inbox</Link>
-          <span className="travelerNavActive">Profile</span>
+        <nav className="travelerPrimaryNav" aria-label="Traveler navigation">
+          <Link href="/traveler">Home</Link><Link href="/explore">Explore</Link><Link href="/traveler/chats">Chats</Link><span className="travelerNavActive">Profile</span>
         </nav>
       </header>
 
@@ -94,9 +104,15 @@ export default function TravelerProfilePage() {
 
           <section className="travelerProfileCard">
             <div className="publicEyebrow">APP CONTROL</div>
-            <h2>Lock this space</h2>
-            <p>Lock the traveler space without signing out. The next unlock uses your personal PIN.</p>
-            <button className="publicSecondary" onClick={lockApp}>Lock Expodia</button>
+            <h2>Automatic app lock</h2>
+            <p>After this period of inactivity, the traveler space locks and requires your four-digit PIN again. The account session is not signed out.</p>
+            <label className="travelerSettingControl">
+              <span>Lock after</span>
+              <select value={lockMinutes} onChange={e => saveLockDuration(Number(e.target.value))} aria-label="Automatic lock duration">
+                {[5,10,15,30,60].map(value => <option key={value} value={value}>{value} minutes</option>)}
+              </select>
+            </label>
+            <button className="publicSecondary" onClick={lockApp}>Lock Expodia now</button>
           </section>
 
           <section className="travelerProfileCard">
