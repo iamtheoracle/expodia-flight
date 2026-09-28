@@ -271,3 +271,45 @@ button.publicPrimary:disabled { opacity:.55; }
   .travelerWorkspace{padding-bottom:74px}
 }
 @media(min-width:821px){.travelerBottomNav{display:none!important}}
+
+
+/* Traveler single navigation + unified chats */
+.travelerPrimaryNav{display:flex;align-items:center;justify-content:center;gap:4px;flex:1}
+.travelerPrimaryNav a,.travelerPrimaryNav .travelerNavActive{color:#5d5751;text-decoration:none;border:0;background:transparent;padding:9px 13px;border-radius:999px;font-size:.86rem;font-weight:700}
+.travelerPrimaryNav a:hover,.travelerPrimaryNav .travelerNavActive{background:#171513;color:#fff}
+.travelerHeaderTitle{font-size:.9rem;font-weight:750;color:#5d5751}
+.travelerChatsPage h1{margin:8px 0;font-size:clamp(2rem,5vw,3.8rem);letter-spacing:-.055em}
+.travelerChatsIntro{max-width:720px;color:#6d665f;line-height:1.6}
+.travelerChatFilters{display:flex;gap:6px;margin:24px 0 14px;overflow:auto}
+.travelerChatFilters button{border:1px solid rgba(23,21,19,.12);background:#fff;color:#5d5751;border-radius:999px;padding:9px 13px;font-size:11px;font-weight:750;white-space:nowrap}
+.travelerChatFilters button.active{background:#171513;color:#fff;border-color:#171513}
+.travelerChatLayout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:12px;min-height:520px}
+.travelerChatList,.travelerChatPanel{background:#fff;border:1px solid rgba(23,21,19,.1);border-radius:16px;overflow:hidden}
+.travelerChatList{padding:8px}
+.travelerChatList section+section{margin-top:12px;padding-top:12px;border-top:1px solid rgba(23,21,19,.08)}
+.travelerChatListHeading{padding:9px;color:#777;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.travelerChatCreate{display:grid;grid-template-columns:1fr auto;gap:6px;padding:6px}
+.travelerChatCreate input{min-height:38px}
+.travelerChatCreate button,.travelerChatInvite button{border:1px solid #d0d0ca;background:#fff;border-radius:8px;padding:0 10px;font-size:11px;font-weight:750}
+.travelerChatList>section>button{width:100%;border:0;background:transparent;text-align:left;padding:12px 10px;border-radius:10px;color:#333;font-size:12px;font-weight:650}
+.travelerChatList>section>button:hover,.travelerChatList>section>button.active{background:#f1eee9;color:#171513}
+.travelerChatList>section>button small{display:block;color:#777;font-size:9px;margin-top:4px}
+.travelerChatPanel{display:flex;flex-direction:column;min-height:520px}
+.travelerChatPanel>header{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px;border-bottom:1px solid rgba(23,21,19,.08)}
+.travelerChatPanel>header h2{margin:4px 0;font-size:18px}
+.travelerChatPanel>header>span{color:#777;font-size:10px}
+.travelerChatInvite{display:flex;gap:6px}
+.travelerChatInvite input{min-height:38px;width:170px}
+.travelerSettingControl{display:grid;gap:7px;margin:12px 0}
+.travelerSettingControl span{font-size:11px;color:#5d5751;font-weight:700}
+.travelerSettingControl select{min-height:42px}
+@media(max-width:760px){
+  .travelerPrimaryNav{gap:0}
+  .travelerPrimaryNav a,.travelerPrimaryNav .travelerNavActive{padding:8px 8px;font-size:.72rem}
+  .travelerChatLayout{grid-template-columns:1fr}
+  .travelerChatList{max-height:330px;overflow:auto}
+  .travelerChatPanel{min-height:440px}
+  .travelerChatPanel>header{display:block}
+  .travelerChatInvite{margin-top:10px}
+  .travelerChatInvite input{width:100%;flex:1}
+}
