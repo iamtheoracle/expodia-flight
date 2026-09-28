@@ -1,7 +1,27 @@
 export type PlatformRole = 'admin' | 'agent' | 'traveler' | 'anonymous';
 
-const travelerPaths = ['/traveler', '/home', '/traveler/inbox', '/traveler/profile'];
-const agentPaths = ['/agent', '/bookings', '/cart', '/passengers', '/tickets', '/documents', '/tracking', '/aviation', '/notifications', '/audit'];
+const travelerPaths = [
+  '/traveler',
+  '/home',
+  '/traveler/inbox',
+  '/traveler/profile',
+  '/traveler/saved',
+  '/traveler/trips',
+  '/traveler/communities',
+];
+
+const agentPaths = [
+  '/agent',
+  '/bookings',
+  '/cart',
+  '/passengers',
+  '/tickets',
+  '/documents',
+  '/tracking',
+  '/aviation',
+  '/notifications',
+  '/audit',
+];
 
 function matches(pathname: string, paths: string[]) {
   return paths.some((path) => pathname === path || pathname.startsWith(path + '/'));
