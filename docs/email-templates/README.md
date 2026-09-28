@@ -1,6 +1,6 @@
 # Expodia transactional email templates
 
-The email system uses a reusable travel-confirmation structure with Expedia-style travel-email information hierarchy as the initial visual reference. It is not an Expedia-issued email and does not imply an Expedia Group relationship.
+The email system uses a reusable travel-confirmation structure based on established travel-booking information hierarchy. The flight booking receipt is a production Expodia template and is intentionally plain, monochrome, dense and multi-section rather than a decorative marketing design.
 
 Templates:
 - booking-confirmation: Your trip is booked
