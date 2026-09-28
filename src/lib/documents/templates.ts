@@ -1,14 +1,9 @@
-export type DocumentField = {
-  key: string;
-  label: string;
-  required: boolean;
-};
-
+export type DocumentField = { key: string; label: string; required: boolean };
 export type DocumentTemplate = {
   id: string;
-  documentType: 'EXPODIA_RECEIPT' | 'EXPODIA_INVOICE';
+  documentType: 'EXPODIA_RECEIPT' | 'EXPODIA_INVOICE' | 'EXPODIA_FLIGHT_RECEIPT';
   issuerType: 'EXPODIA';
-  issuerName: 'Expodia';
+  issuerName: 'Expodia Flights';
   countryCode: string | null;
   languageCode: string;
   version: string;
@@ -16,13 +11,13 @@ export type DocumentTemplate = {
 };
 
 export const EXPODIA_RECEIPT_TEMPLATE: DocumentTemplate = {
-  id: 'expodia-receipt',
-  documentType: 'EXPODIA_RECEIPT',
+  id: 'expodia-flight-receipt',
+  documentType: 'EXPODIA_FLIGHT_RECEIPT',
   issuerType: 'EXPODIA',
-  issuerName: 'Expodia',
+  issuerName: 'Expodia Flights',
   countryCode: null,
   languageCode: 'en',
-  version: '1.0',
+  version: '2.0',
   fields: [
     { key: 'documentNumber', label: 'Receipt number', required: true },
     { key: 'bookingId', label: 'Booking ID', required: true },
@@ -34,15 +29,9 @@ export const EXPODIA_RECEIPT_TEMPLATE: DocumentTemplate = {
   ],
 };
 
-export function validateDocumentFields(
-  template: DocumentTemplate,
-  data: Record<string, unknown>,
-): string[] {
-  return template.fields
-    .filter((field) => field.required)
-    .filter((field) => {
-      const value = data[field.key];
-      return value === undefined || value === null || String(value).trim() === '';
-    })
-    .map((field) => field.label);
+export function validateDocumentFields(template: DocumentTemplate, data: Record<string, unknown>): string[] {
+  return template.fields.filter((field) => field.required).filter((field) => {
+    const value = data[field.key];
+    return value === undefined || value === null || String(value).trim() === '';
+  }).map((field) => field.label);
 }
