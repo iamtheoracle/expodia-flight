@@ -111,7 +111,7 @@ export async function POST(request: Request) {
     };
   });
 
-  const segmentRows = (segments ?? []).map((segment, index) => ({
+  const segmentRows: Array<{ direction: 'OUTBOUND' | 'RETURN' | 'OTHER'; date: string; origin: string; destination: string; carrier: string; flightNumber: string; departure: string; arrival: string; duration: string | null; stops: string | null; cabin: string | null; fareClass: string | null; terminalDeparture: string | null; terminalArrival: string | null; aircraft: string | null; status: string | null }> = (segments ?? []).map((segment, index) => ({
     direction: index === 0 ? 'OUTBOUND' as const : 'OTHER' as const,
     date: formatDate(segment.departure_local),
     origin: segment.origin_iata,
