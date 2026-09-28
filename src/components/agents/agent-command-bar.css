@@ -1,0 +1,109 @@
+.agentCommandBar {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #deded8;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.agentCommandBar.compact {
+  margin-top: 12px;
+  padding: 10px;
+}
+
+.acbLabel {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #777770;
+  margin-bottom: 8px;
+}
+
+.acbRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.acbBtn {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid #d4d4ce;
+  background: #f7f7f4;
+  color: #17233c;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.acbBtn:hover:not(:disabled) {
+  border-color: #315aa8;
+  background: #fff;
+}
+
+.acbBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.acbAnswer {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.acbSummary {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 650;
+  color: #101010;
+  line-height: 1.45;
+}
+
+.acbMsg,
+.acbUnavailable {
+  margin: 0 0 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.acbUnavailable {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.acbActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.acbAction {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #17233c;
+  background: #17233c;
+  color: #fff !important;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button.acbAction {
+  font: inherit;
+}
+
+.acbAction:hover {
+  opacity: 0.92;
+}
