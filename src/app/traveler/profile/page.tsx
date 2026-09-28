@@ -2,6 +2,10 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+
+const TRAVELER_INACTIVITY_MS = 10 * 60 * 1000;
+const TRAVELER_LAST_ACTIVITY_KEY = 'expodia_last_activity_at';
+const TRAVELER_LOCK_KEY = 'expodia_app_locked';
 import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
 
@@ -17,6 +21,27 @@ export default function TravelerProfilePage() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const markActivity = () => {
+        if (localStorage.getItem(TRAVELER_LOCK_KEY) !== '1') localStorage.setItem(TRAVELER_LAST_ACTIVITY_KEY, String(Date.now()));
+      };
+      if (localStorage.getItem(TRAVELER_LOCK_KEY) === '1') { router.replace('/traveler'); return; }
+      if (!localStorage.getItem(TRAVELER_LAST_ACTIVITY_KEY)) markActivity();
+      const events = ['pointerdown','keydown','touchstart','scroll','input'];
+      events.forEach(event => window.addEventListener(event, markActivity, { passive: true }));
+      const timer = window.setInterval(() => {
+        const last = Number(localStorage.getItem(TRAVELER_LAST_ACTIVITY_KEY) || 0);
+        if (last > 0 && Date.now() - last >= TRAVELER_INACTIVITY_MS) {
+          localStorage.setItem(TRAVELER_LOCK_KEY, '1');
+          localStorage.removeItem(TRAVELER_LAST_ACTIVITY_KEY);
+          router.replace('/traveler');
+        }
+      }, 1000);
+      return () => { events.forEach(event => window.removeEventListener(event, markActivity)); window.clearInterval(timer); };
+    }
+  }, [router]);
 
   useEffect(() => {
     let mounted = true;
@@ -43,12 +68,14 @@ export default function TravelerProfilePage() {
   }
 
   async function lockApp() {
-    localStorage.setItem('expodia_app_locked', '1');
+    localStorage.setItem(TRAVELER_LOCK_KEY, '1');
+    localStorage.removeItem(TRAVELER_LAST_ACTIVITY_KEY);
     router.replace('/traveler');
   }
 
   async function signOut() {
-    localStorage.removeItem('expodia_app_locked');
+    localStorage.removeItem(TRAVELER_LOCK_KEY);
+    localStorage.removeItem(TRAVELER_LAST_ACTIVITY_KEY);
     await supabase.auth.signOut();
     router.replace('/access');
   }
@@ -90,6 +117,13 @@ export default function TravelerProfilePage() {
               <input inputMode="numeric" autoComplete="off" maxLength={4} value={confirmPin} onChange={e => setConfirmPin(e.target.value.replace(/\D/g, '').slice(0,4))} placeholder="Confirm PIN" aria-label="Confirm PIN" />
               <button className="publicPrimary" onClick={savePin} disabled={saving}>{saving ? 'Saving…' : 'Save PIN'}</button>
             </div>
+          </section>
+
+          <section className="travelerProfileCard">
+            <div className="publicEyebrow">APP SECURITY</div>
+            <h2>Automatic lock</h2>
+            <p>Expodia automatically locks this traveler space after 10 minutes without activity. Your four-digit PIN is required to unlock it again.</p>
+            <div className="travelerSettingsList"><div><span>Inactivity duration</span><strong>10 minutes</strong></div><div><span>Unlock method</span><strong>4-digit PIN</strong></div></div>
           </section>
 
           <section className="travelerProfileCard">
