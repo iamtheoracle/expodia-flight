@@ -10,6 +10,13 @@
 
 **Spec:** docs/superpowers/specs/2026-09-28-expodia-platform-milestones-design.md
 
+## Dashboard Contract
+- Traveler, agent, and admin are three distinct product experiences, not one dashboard with permission-based cosmetics.
+- Traveler UI/routes: customer-facing discovery, search, planning, cart, profile, bookings, tickets, documents, tracking, notifications, communities, saved items and travel intelligence; no agent/admin operational data.
+- Agent UI/routes: human booking operations for customers/passengers, search, cart/checkout, bookings, tickets, documents, tracking, customer communication, cases/tasks and agent intelligence; agent status does not imply admin access.
+- Admin UI/routes: management/control plane for agents, applications, permissions, security, provider/configuration controls, audit, operational intelligence, content and system health.
+- Navigation, layout, terminology, data visibility and route guards are distinct per dashboard; UI hiding is never the security boundary.
+- Server-side authorization must explicitly verify the required role. A user may hold multiple roles only when explicit role records grant them.
 ## Global Constraints
 - No fake/demo operational content.
 - main remains the source-of-truth branch; implementation occurs on a feature branch and is not deployed automatically.
@@ -27,7 +34,18 @@
 - A logged-in traveler must not read another traveler's profile, documents, notifications or conversations through the client.
 - A deployment with no optional provider credentials must fail honestly without rendering invented inventory.
 
-### Task 1: Runtime and deployment reconciliation
+### Task 1: Dashboard separation and authorization foundation
+
+**Files:** src/middleware.ts, existing traveler/agent/admin route layouts and shells, authorization helpers, tests.
+**Interfaces:** Produces explicit server-side role checks and dashboard-specific route contracts consumed by all later milestones.
+- [ ] Write failing tests covering traveler access to traveler routes, traveler denial of agent/admin routes, agent access to agent routes, agent denial of admin routes, admin access to admin routes, and public verification access without private identity data.
+- [ ] Inspect the existing role sources (agents, company_admins, traveler profile/security records) and define the smallest deterministic role-resolution helper; do not infer one role from another.
+- [ ] Refactor middleware/server guards so traveler, agent and admin route trees have explicit authorization boundaries while preserving existing company-admin protection.
+- [ ] Ensure each dashboard renders its own navigation/layout rather than reusing an agent shell for travelers or treating admin as an agent variant.
+- [ ] Add server-side tests proving direct URL access cannot bypass the UI boundaries.
+- [ ] Run focused authorization tests and the existing suite.
+
+### Task 2: Runtime and deployment reconciliation
 **Files:** package.json, .github/workflows/ci.yml, deployment documentation; remove or relocate stale root Cloudflare-only configuration if it conflicts with the authoritative runtime.
 **Interfaces:** Produces a single documented default runtime and CI contract.
 - [ ] Add a deployment contract test/documentation check.
@@ -36,7 +54,7 @@
 - [ ] Document standard Next.js deployment and optional Cloudflare Workers requirements.
 - [ ] Run lint, typecheck, test and build through CI.
 
-### Task 2: Private traveler profile and document foundation
+### Task 3: Private traveler profile and document foundation
 **Files:** new Supabase migration, traveler profile route/components, document helpers/tests.
 **Interfaces:** Produces private traveler identity/document records addressable by auth user id.
 - [ ] Add failing tests for ownership and validation behavior.
@@ -46,7 +64,7 @@
 - [ ] Add deterministic validation for booking-required fields.
 - [ ] Run migration/security tests and the full suite.
 
-### Task 3: Intelligence source, freshness and deduplication foundation
+### Task 4: Intelligence source, freshness and deduplication foundation
 **Files:** new Supabase migration, server-side intelligence modules, tests.
 **Interfaces:** Produces a deterministic upsertIntelligenceItem(sourceId, sourceUrl, observedAt, content, kind) contract; unchanged content is not republished.
 - [ ] Write red tests for identical-source suppression and material-update detection.
@@ -56,7 +74,7 @@
 - [ ] Keep AI outside the persistence/state machine.
 - [ ] Run focused tests then the full suite.
 
-### Task 4: Real signed-in discovery feed
+### Task 5: Real signed-in discovery feed
 **Files:** src/app/home/page.tsx, feed components/styles, server query/service modules, tests.
 **Interfaces:** Feed query returns only publishable, permission-safe intelligence ordered by freshness/relevance with pagination.
 - [ ] Write red tests for empty verified source set and duplicate suppression.
@@ -66,7 +84,7 @@
 - [ ] Remove repeated "Expodia" UI labels where unnecessary.
 - [ ] Run focused UI/service tests and full suite.
 
-### Task 5: Notifications, communities and documentation surfaces
+### Task 6: Notifications, communities and documentation surfaces
 **Files:** notifications route/components, sidebar/home rail, notification data access, tests.
 **Interfaces:** Notifications distinguish booking, document, travel, account, community and intelligence events.
 - [ ] Write red tests for notification ownership and category filtering.
@@ -76,7 +94,7 @@
 - [ ] Keep empty states honest when no records exist.
 - [ ] Run focused tests and full suite.
 
-### Task 6: Production hardening and final verification
+### Task 7: Production hardening and final verification
 **Files:** RLS/security migrations if needed, env example, deployment docs, tests.
 **Interfaces:** Production readiness is verified by lint, typecheck, test, build and CI status.
 - [ ] Audit exposed public-schema tables and RLS.
