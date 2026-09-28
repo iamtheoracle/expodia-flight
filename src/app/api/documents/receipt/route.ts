@@ -102,7 +102,7 @@ export async function POST(request: Request) {
     const ticket = (tickets ?? []).find((item) => item.passenger_id === row.passenger_id);
     return {
       name: passenger ? `${passenger.given_name} ${passenger.family_name}` : 'Passenger information pending',
-      type: passenger?.date_of_birth ? 'Traveler' : 'Traveler',
+      type: 'Traveler',
       ticketStatus: ticket?.status === 'ISSUED' ? 'TICKETED' : ticket?.status === 'VOIDED' ? 'VOIDED' : 'PENDING',
       ticketNumber: ticket?.e_ticket_number ?? null,
       providerConfirmation: booking.pnr ?? booking.provider_booking_id ?? null,
@@ -222,7 +222,7 @@ export async function POST(request: Request) {
   await recordDocumentEvent(supabase, { documentId: document.id, bookingId: booking.id, eventType: 'DOCUMENT_CREATED', actorType: 'AI', metadata: { worker: 'document_renderer', documentVersion: 1 } });
   await recordDocumentEvent(supabase, { documentId: document.id, bookingId: booking.id, eventType: 'DOCUMENT_VERIFIED', actorType: 'AI', metadata: { paymentIds: successfulPayments.map((payment) => payment.id), bookingStatus: booking.status } });
   await recordDocumentEvent(supabase, { documentId: document.id, bookingId: booking.id, eventType: 'DOCUMENT_PUBLISHED', actorType: 'AI', metadata: { surfaces: ['documents', 'payment-workflow'] } });
-  await queueTravelEmail(supabase, { templateId: 'payment-receipt', documentId: document.id, bookingId: booking.id, recipientEmail: customer.email, metadata: { paymentIds: successfulPayments.map((payment) => payment.id), documentVersion: 1 } });
+  await queueTravelEmail(supabase, { templateId: 'payment-receipt', documentId: document.id, bookingId: booking.id, recipientEmail: customer.email, canonicalData: { confirmation: documentNumber, amount: money(totalAmount, currency).value, currency }, metadata: { paymentIds: successfulPayments.map((payment) => payment.id), documentVersion: 1 } });
 
   return new Response(pdf as BodyInit, {
     status: 200,
