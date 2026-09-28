@@ -1,4 +1,9 @@
 import Link from 'next/link';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { createServerClient } from '@supabase/ssr';
+import { getSupabaseConfig } from '@/lib/supabase/config';
+import { dashboardPathForRole, type PlatformRole } from '@/lib/auth/route-access';
 import ExpodiaMap from '@/components/ExpodiaMap';
 
 const discoveries=[
@@ -7,7 +12,31 @@ const discoveries=[
   {label:'Plan a journey',text:'Bring flights, stays, events, transport and requirements into one plan.',href:'/traveler'}
 ];
 
-export default function HomePage(){
+async function resolveHomeRole(): Promise<PlatformRole> {
+  const cookieStore = await cookies();
+  const { url, anonKey } = getSupabaseConfig();
+  const supabase = createServerClient(url, anonKey, {
+    cookies: {
+      getAll: () => cookieStore.getAll(),
+      setAll: () => {},
+    },
+  });
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return 'anonymous';
+  const [{ data: admin }, { data: agent }, { data: traveler }] = await Promise.all([
+    supabase.from('company_admins').select('user_id').eq('user_id', user.id).maybeSingle(),
+    supabase.from('agents').select('id').eq('id', user.id).maybeSingle(),
+    supabase.from('traveler_profiles').select('user_id').eq('user_id', user.id).maybeSingle(),
+  ]);
+  if (admin) return 'admin';
+  if (agent) return 'agent';
+  if (traveler) return 'traveler';
+  return 'anonymous';
+}
+
+export default async function HomePage(){
+  const role = await resolveHomeRole();
+  if (role !== 'anonymous') redirect(dashboardPathForRole(role));
   return <main className="publicHome">
     <header className="publicHeader">
       <Link href="/" className="publicBrand">Expodia Flights</Link>
