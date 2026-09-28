@@ -8,6 +8,7 @@ const navigation = [
   ['Passengers', '/passengers'],
   ['Tickets', '/tickets'],
   ['Documents', '/documents'],
+  ['Receipt template', '/email-previews'],
   ['Flight tracking', '/tracking'],
   ['Aviation intelligence', '/aviation'],
   ['Industry leadership', 'https://www.expediagroup.com/en-us/about-us/leadership'],
