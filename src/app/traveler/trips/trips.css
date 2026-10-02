@@ -1,0 +1,37 @@
+.tripsIntro { color:#777770; font-size:13px; max-width:640px; }
+
+.tripsReminder { display:grid; gap:4px; margin:18px 0; padding:14px 18px; border-radius:12px; background:#fff8d9; border:1px solid #f0e0a0; color:#5c4a00; font-size:12px; }
+.tripsReminder strong { font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+
+.tripsToolbar { display:flex; gap:6px; margin:22px 0 16px; }
+.tripsToolbar button { border:1px solid #deded8; background:#fff; color:#555; border-radius:999px; padding:9px 16px; font-size:12px; font-weight:700; cursor:pointer; }
+.tripsToolbar button.active { background:var(--expedia-navy,#1b1b3a); border-color:var(--expedia-navy,#1b1b3a); color:#fff; }
+
+.tripsList { display:grid; gap:16px; }
+.tripCard { background:#fff; border:1px solid #deded8; border-radius:16px; padding:20px 22px; }
+
+.tripCardHeader { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap; }
+.tripAirline { font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#777770; }
+.tripRoute { display:flex; align-items:baseline; gap:8px; margin-top:6px; flex-wrap:wrap; }
+.tripRoute strong { font-size:22px; letter-spacing:-.03em; color:var(--expedia-navy,#1b1b3a); }
+.tripRoute span { font-size:11px; color:#8a8a82; }
+.tripRoute em { color:var(--expedia-blue,#0060c0); font-style:normal; }
+
+.tripMeta { display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; color:#555; font-size:12px; }
+
+.tripStatusRow { display:flex; align-items:center; gap:8px; margin-top:12px; font-size:12px; }
+.tripStatusLabel { font-size:9px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#9a9a92; }
+.tripStatusValue { color:#777770; }
+.tripStatusValue.ready { color:#1a7f37; font-weight:700; }
+
+.tripChecklist { margin-top:18px; border-top:1px solid #eee; padding-top:16px; }
+.tripChecklistHead { display:flex; justify-content:space-between; align-items:baseline; font-size:12px; }
+.tripChecklistHead span { color:#777770; font-size:11px; }
+.tripChecklistBar { height:6px; border-radius:999px; background:#eee; margin:8px 0 14px; overflow:hidden; }
+.tripChecklistBar span { display:block; height:100%; background:var(--expedia-blue,#0060c0); border-radius:999px; transition:width .2s ease; }
+.tripChecklist ul { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:6px; }
+.tripChecklist li label { display:flex; align-items:center; gap:8px; font-size:12px; color:#333; cursor:pointer; }
+
+.tripChecklistAdd { display:grid; grid-template-columns:1fr auto; gap:8px; margin-top:12px; max-width:340px; }
+.tripChecklistAdd input { min-height:38px; border:1px solid #deded8; border-radius:9px; padding:0 12px; font-size:12px; }
+.tripChecklistAdd button { border:0; border-radius:9px; background:var(--expedia-navy,#1b1b3a); color:#fff; font-size:12px; font-weight:700; padding:0 16px; cursor:pointer; }
