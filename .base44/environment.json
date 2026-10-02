@@ -1,0 +1,13 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "SUPABASE_SERVICE_ROLE_KEY",
+      "description": "Supabase service role key for server-side admin operations. Not required to boot the app — only needed when admin/server endpoints are called. Get it from your Supabase project settings (Settings → API → service_role).",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    }
+  ]
+}
