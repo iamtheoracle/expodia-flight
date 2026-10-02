@@ -16,7 +16,7 @@ services:
       - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
       - BASE44_PUBLIC_HOST_SUFFIX
       - BASE44_SANDBOX_HOST_DOMAIN
-    command: ["sh", "-ec", "npm install && exec npm run dev -- --hostname 0.0.0.0 --port 3000"]
+    command: ["sh", "-ec", "npm install --no-audit --no-fund && node ./scripts/copy-maplibre-worker.mjs && exec ./node_modules/.bin/next dev --hostname 0.0.0.0 --port 3000"]
     healthcheck:
       test: ["CMD-SHELL", "node -e \"fetch('http://localhost:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
       interval: 10s
