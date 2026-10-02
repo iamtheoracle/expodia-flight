@@ -49,7 +49,22 @@ function AuthCallbackContent() {
       // OAuth/email traveler accounts need a profile row before the protected
       // traveler workspace can recognize the account. This is provisioning,
       // not authorization; middleware still authorizes by database role.
-      if (user.user_metadata?.access_type === 'traveler') {
+      const intendedRole =
+        params.get('role') ?? (user.user_metadata?.access_type as string | undefined) ?? '';
+
+      let provisionTraveler = intendedRole === 'traveler';
+
+      if (!intendedRole || intendedRole === 'auto') {
+        // Google sign-in from the shared access screen: only traveler accounts
+        // need a profile row, so accounts that are already professional are skipped.
+        const [{ data: agent }, { data: admin }] = await Promise.all([
+          supabase.from('agents').select('id').eq('id', user.id).maybeSingle(),
+          supabase.from('company_admins').select('user_id').eq('user_id', user.id).maybeSingle(),
+        ]);
+        provisionTraveler = !agent && !admin;
+      }
+
+      if (provisionTraveler) {
         const requestedUsername = String(
           user.user_metadata?.username ?? ''
         ).trim();

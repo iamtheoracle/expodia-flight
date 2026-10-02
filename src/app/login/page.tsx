@@ -3,6 +3,7 @@
 import { FormEvent, Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
 
 function LoginForm() {
   const searchParams = useSearchParams();
@@ -36,7 +37,7 @@ function LoginForm() {
         <form onSubmit={submit} style={{ display: 'grid', gap: 16, marginTop: 24 }}>
           <label>Email<input name="email" type="email" autoComplete="email" required /></label>
           <label>Password<input name="password" type="password" autoComplete="current-password" required /></label>
-          <button className="primary" type="submit" disabled={loading}>{loading ? 'Signing in…' : 'Sign in'}</button><div className="notice">Professional account registration is invitation-only. Use the private registration link supplied by your Expodia administrator.</div>
+          <button className="primary" type="submit" disabled={loading}>{loading ? 'Signing in…' : 'Sign in'}</button><GoogleSignInButton role="professional" next={next} /><div className="notice">Professional account registration is invitation-only. Use the private registration link supplied by your Expodia administrator.</div>
           {error && <div className="notice" role="alert">{error}</div>}
         </form>
       </section>

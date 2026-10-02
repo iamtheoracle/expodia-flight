@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NotificationBell } from '@/components/notifications/NotificationBell';
 
 const navigation = [
   ['Home / Discover', '/traveler'],
@@ -29,7 +30,10 @@ export function TravelerShell({ children, currentPath }: { children: React.React
             <div className="publicEyebrow">TRAVELER SPACE</div>
             <strong>Your journeys, together</strong>
           </div>
-          <Link href="/assistant" className="publicSecondary">Ask Expodia</Link>
+          <div className="shellHeaderActions">
+            <Link href="/assistant" className="publicSecondary">Ask Expodia</Link>
+            <NotificationBell />
+          </div>
         </header>
         {children}
       </main>

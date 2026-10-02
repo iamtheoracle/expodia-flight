@@ -1,0 +1,39 @@
+/* Host header slot for the bell in the agent and traveler shells. */
+.shellHeaderActions { display: flex; align-items: center; gap: 10px; }
+
+.notificationBell { position: relative; }
+
+.notificationBellButton { position: relative; width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: 999px; background: #fff; font-size: 15px; }
+.notificationBellButton:hover { border-color: #999; }
+.notificationBellCount { position: absolute; top: -3px; right: -3px; min-width: 17px; height: 17px; padding: 0 4px; display: grid; place-items: center; border-radius: 999px; background: #a21d1d; color: #fff; font-size: 9px; font-weight: 800; }
+
+.notificationBellPanel { position: absolute; right: 0; top: calc(100% + 10px); z-index: 60; width: min(370px, calc(100vw - 32px)); background: #fff; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 20px 50px rgba(16, 16, 16, .14); overflow: hidden; }
+.notificationBellPanel > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.notificationBellPanel > header strong { font-size: 13px; }
+.notificationBellPanel > header button { border: 0; background: transparent; color: var(--expedia-blue); font-size: 11px; font-weight: 750; }
+.notificationBellList { max-height: 340px; overflow: auto; }
+.notificationBellEmpty { margin: 0; padding: 30px 16px; text-align: center; color: var(--muted); font-size: 12px; }
+.notificationBellItem { display: grid; gap: 4px; width: 100%; padding: 13px 16px; border: 0; border-bottom: 1px solid var(--border); background: #fff; text-align: left; }
+.notificationBellItem:hover { background: #f7f7f4; }
+.notificationBellItem.unread { background: #fffdf3; }
+.notificationBellItem strong { font-size: 12px; }
+.notificationBellItem p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.notificationBellItem small { color: #9a9a94; font-size: 10px; }
+.notificationBellCategory { color: #777770; font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+.notificationBellPanel > footer { display: grid; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border); }
+.notificationBellPanel > footer button,
+.notificationBellPanel > footer a { border: 1px solid var(--border-strong); border-radius: 8px; background: #fff; padding: 9px 12px; font-size: 11px; font-weight: 700; color: #171717; text-align: center; text-decoration: none; }
+.notificationBellPanel > footer button:hover,
+.notificationBellPanel > footer a:hover { border-color: #999; }
+
+.notificationToastStack { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: grid; gap: 10px; width: min(360px, calc(100vw - 40px)); }
+.notificationToast { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; padding: 15px 16px; border: 1px solid var(--border); border-left: 3px solid var(--expedia-yellow); border-radius: 12px; background: #fff; box-shadow: 0 18px 44px rgba(16, 16, 16, .16); }
+.notificationToast strong { display: block; font-size: 12px; }
+.notificationToast p { margin: 5px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.notificationToastActions { display: flex; align-items: center; gap: 8px; flex: none; }
+.notificationToastActions a { color: var(--expedia-blue); font-size: 11px; font-weight: 750; text-decoration: none; }
+.notificationToastActions button { border: 0; background: transparent; color: #9a9a94; font-size: 17px; line-height: 1; padding: 2px 4px; }
+
+@media (max-width: 520px) {
+  .notificationToastStack { left: 16px; right: 16px; width: auto; }
+}

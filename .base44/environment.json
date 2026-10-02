@@ -5,7 +5,43 @@
   "secrets": [
     {
       "name": "SUPABASE_SERVICE_ROLE_KEY",
-      "description": "Supabase service role key for server-side admin operations. Not required to boot the app — only needed when admin/server endpoints are called. Get it from your Supabase project settings (Settings → API → service_role).",
+      "description": "Supabase service role key for server-side admin operations. Not required to boot the app — needed by the push notification delivery route. Get it from your Supabase project settings (Settings → API → service_role).",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "SENDGRID_API_KEY",
+      "description": "SendGrid API key used to send transactional email. Create one in SendGrid → Settings → API Keys (Mail Send permission).",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "NOTIFICATION_EMAIL_FROM",
+      "description": "Verified SendGrid sender address used as the From address for notification email (for example notifications@yourdomain.com).",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "GOOGLE_RBM_AGENT_ID",
+      "description": "RCS Business Messaging agent id (for example brand@yourdomain.com) from the Google RCS Business Messaging console. RCS also requires carrier/brand verification before messages deliver.",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "GOOGLE_RBM_SERVICE_ACCOUNT_JSON",
+      "description": "Full service-account JSON key (single line) for the RBM agent, granted the RCS Business Messaging scope.",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "NEXT_PUBLIC_VAPID_PUBLIC_KEY",
+      "description": "Public VAPID key for browser push. Generate a pair with `npx web-push generate-vapid-keys` and paste the public key here (it is exposed to the browser by design).",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": false
+    },
+    {
+      "name": "VAPID_PRIVATE_KEY",
+      "description": "Private VAPID key paired with NEXT_PUBLIC_VAPID_PUBLIC_KEY, used server-side to sign browser push messages.",
       "requiredAtBoot": false,
       "generatedForDevelopment": false
     }

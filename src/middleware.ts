@@ -110,4 +110,6 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-export const config = { matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'] };
+// sw.js stays outside the auth gate: the browser fetches the service worker
+// without a guaranteed session, and a redirect would break push registration.
+export const config = { matcher: ['/((?!_next/static|_next/image|favicon.ico|sw.js).*)'] };

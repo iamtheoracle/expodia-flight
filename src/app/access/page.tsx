@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createSupabaseBrowserClient } from '@/lib/supabase/client';
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
 
 export default function AccessPage() {
   const router = useRouter();
@@ -17,22 +18,6 @@ export default function AccessPage() {
   const [agentPinRequired, setAgentPinRequired] = useState(false);
   const [agentSecuritySetup, setAgentSecuritySetup] = useState(false);
   const [agentPin, setAgentPin] = useState('');
-
-  async function continueWithGoogle() {
-    setError(''); setMessage(''); setLoading(true);
-    const supabase = createSupabaseBrowserClient();
-    const { error: oauthError } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/traveler`,
-        queryParams: { access_type: 'offline', prompt: 'select_account' },
-      },
-    });
-    if (oauthError) {
-      setError('Google sign-in is not available yet. Please use email and password.');
-      setLoading(false);
-    }
-  }
 
   async function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -288,7 +273,7 @@ export default function AccessPage() {
             <label>Email<input name="email" type="email" autoComplete="email" required /></label>
             <label>Password<input name="password" type="password" autoComplete="current-password" required /></label>
             <button className="primary" type="submit" disabled={loading}>{loading ? 'Checking…' : 'Sign in'}</button>
-            <button className="publicSecondary" type="button" onClick={continueWithGoogle} disabled={loading}>Continue with Google</button>
+            <GoogleSignInButton role="auto" className="publicSecondary" />
             <button className="publicSecondary" type="button" onClick={() => { setSignUpMode(true); setError(''); setMessage(''); }}>Sign up</button>
             <div className="travelerAuthLinks">
               <Link href="/traveler">Continue without an account</Link>
@@ -305,7 +290,7 @@ export default function AccessPage() {
                 <label>Email<input name="email" type="email" autoComplete="email" required /></label>
                 <label>Password<input name="password" type="password" autoComplete="new-password" minLength={8} required /></label>
                 <button className="primary" type="submit" disabled={loading}>{loading ? 'Creating…' : 'Create traveler account'}</button>
-                <button className="publicSecondary" type="button" onClick={continueWithGoogle} disabled={loading}>Continue with Google</button>
+                <GoogleSignInButton role="auto" className="publicSecondary" />
                 <button className="publicSecondary" type="button" onClick={() => setProfessionalMode(true)}>I have an Expodia referral code</button>
                 <button className="publicSecondary" type="button" onClick={() => { setSignUpMode(false); setError(''); setMessage(''); }}>Back to sign in</button>
               </form>

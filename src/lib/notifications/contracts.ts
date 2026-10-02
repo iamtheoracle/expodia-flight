@@ -1,4 +1,4 @@
-export type NotificationChannel = 'EMAIL' | 'SMS' | 'WHATSAPP' | 'PUSH';
+export type NotificationChannel = 'EMAIL' | 'SMS' | 'RCS' | 'WHATSAPP' | 'PUSH' | 'IN_APP';
 export type NotificationStatus = 'PENDING' | 'SENT' | 'FAILED' | 'SUPPRESSED';
 
 export interface NotificationEvent {

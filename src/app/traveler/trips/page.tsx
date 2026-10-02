@@ -9,6 +9,7 @@ import {
   isUpcoming,
   type Trip,
 } from '@/lib/traveler/trips';
+import { addLocalNotification } from '@/lib/notifications/in-app-store';
 import './trips.css';
 
 type Tab = 'upcoming' | 'past';
@@ -75,6 +76,35 @@ export default function TravelerTripsPage() {
   const nextTrip = upcoming[0];
   const departingSoon =
     nextTrip && new Date(nextTrip.departureLocal).getTime() - Date.now() <= REMINDER_WINDOW_MS;
+
+  // The reminder the traveler already sees on this page is also raised as an
+  // in-app notification, once per trip, so it reaches the bell and the pop-up.
+  useEffect(() => {
+    if (!departingSoon || !nextTrip) return;
+
+    const key = 'expodia:departure-reminders';
+    let reminded: string[];
+    try {
+      const raw = window.localStorage.getItem(key);
+      reminded = raw ? (JSON.parse(raw) as string[]) : [];
+    } catch {
+      return;
+    }
+    if (reminded.includes(nextTrip.id)) return;
+
+    try {
+      window.localStorage.setItem(key, JSON.stringify([...reminded, nextTrip.id]));
+    } catch {
+      /* storage unavailable — still surface the reminder for this session */
+    }
+
+    addLocalNotification({
+      category: 'OPERATIONAL',
+      title: 'Departure reminder',
+      body: `${nextTrip.flightNumber} ${nextTrip.originIata} → ${nextTrip.destinationIata} departs ${formatTripDateTime(nextTrip.departureLocal)}.`,
+      href: '/traveler/trips',
+    });
+  }, [departingSoon, nextTrip]);
 
   function toggleItem(tripId: string, item: string) {
     setChecklists((current) => {

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NotificationBell } from '@/components/notifications/NotificationBell';
 
 const navigation = [
   ['Dashboard', '/agent'], ['Find flights', '/bookings/new'], ['Cart', '/cart'],
@@ -21,7 +22,10 @@ export function AppShell({ children, currentPath }: { children: React.ReactNode;
       <main className="main">
         <header className="header">
           <div className="headerTitle">Agent operations</div>
-          <div className="status"><span className="statusDot" aria-hidden="true" /> Booking workspace</div>
+          <div className="shellHeaderActions">
+            <div className="status"><span className="statusDot" aria-hidden="true" /> Booking workspace</div>
+            <NotificationBell />
+          </div>
         </header>
         {children}
       </main>

@@ -3,6 +3,10 @@ services:
     image: node:22-slim
     working_dir: /app
     restart: on-failure
+    # Platform-managed secrets (SendGrid, Google RBM, VAPID). Delivered outside
+    # the repo; entries here must never be duplicated under `environment:`.
+    env_file:
+      - /run/base44/app.env
     ports:
       - "3000:3000"
     volumes:
